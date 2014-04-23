@@ -1,7 +1,7 @@
-(ns ai-playground.prob5
+(ns cljagents.prob5
   (:refer-clojure :exclude [==])
   (:require [clojure.core.logic.arithmetic :as ar])
-  (:use [ai-playground.agent]
+  (:use [cljagents.agent]
         [clojure.core.logic]
         [clojure.core.async :only [<!!]]))
 

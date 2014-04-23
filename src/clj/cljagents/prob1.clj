@@ -1,5 +1,5 @@
-(ns ai-playground.prob1
-  (:use [ai-playground.agent]
+(ns cljagents.prob1
+  (:use [cljagents.agent]
         [clojure.core.async :only [<!! >!!]]))
 
 (def target (atom []))

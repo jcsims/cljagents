@@ -1,4 +1,4 @@
-(ns ai-playground.pipes
+(ns cljagents.pipes
   (:require [clojure.core.async
              :refer [<! >! <!! >!! go go-loop chan close! sliding-buffer]]
             [clojure.java.io :as io]

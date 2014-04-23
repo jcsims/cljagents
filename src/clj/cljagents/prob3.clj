@@ -1,6 +1,6 @@
-(ns ai-playground.prob3
+(ns cljagents.prob3
   (:use [clojure.data.priority-map :only [priority-map]]
-        [ai-playground.agent]
+        [cljagents.agent]
         [clojure.core.async :only [<!!]]))
 
 (defn base-map

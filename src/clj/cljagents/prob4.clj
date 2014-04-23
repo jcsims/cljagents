@@ -1,4 +1,4 @@
-(ns ai-playground.prob4
+(ns cljagents.prob4
   (:require [clojure.core.logic :as logic]))
 
 (defn assignment

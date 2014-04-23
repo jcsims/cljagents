@@ -1,5 +1,5 @@
-(ns ai-playground.agent
-  (:use [ai-playground.pipes :as pipes]
+(ns cljagents.agent
+  (:use [cljagents.pipes :as pipes]
         [clojure.core.async :only [<!! >!!]]
         [clojure.math.numeric-tower :as math]
         [clojure.string :only [join]]))
@@ -199,11 +199,11 @@
   that's spawned.
 
   Optional:
-  :name - name of the bot (string) "
+  :name - name of the bot (string)"
   [in-chan out-chan & {:keys [name] }]
   (if name
-    (>!! in-chan (str "name " name))
-    (>!! in-chan "ready"))
+    (>!! in-chan (str "name " name)))
+  (>!! in-chan "ready")
   (<!! out-chan))
 
 (defn euclidean-distance "Determines the Euclidean distance between 2 points"
