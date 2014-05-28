@@ -1,25 +1,33 @@
 (ns cljagents.agent
+  "Basic ProtocolZero actions.
+
+  Check the [wiki](http://www.cs.rochester.edu/trac/quagents/wiki/ProtocolZero)
+  for more details."
   (:use [cljagents.pipes :as pipes]
-        [clojure.core.async :only [<!! >!!]]
-        [clojure.math.numeric-tower :as math]
-        [clojure.string :only [join]]))
+         [clojure.core.async :only [<!! >!!]]
+         [clojure.math.numeric-tower :as math]
+         [clojure.string :only [join]]))
 
 (def ^:private command-count (atom 1))
 
-;;; Helpers
+;;; ##Helpers
+
 (defn- command-id []
   (swap! command-count inc))
 
-;;; Basic actions
+;;; ##Basic actions
+
 (defn move
   "Move the bot.
 
   Optional parameters
-  :obstacles - 1 - hop over low obstacles
-               0 - report blocked for any obstacles (default)
-  :heading - float, 0 is straight ahead (default), 90 is strafe left
-  :speed - float, [-1.0,1.0] 1.0 is full speed ahead (default), 0 is stopped
-  :time - float, how long the bot should move"
+
+  * :obstacles
+      * 1 - hop over low obstacles
+      * 0 - report blocked for any obstacles (default)
+  * :heading - float, 0 is straight ahead (default), 90 is strafe left
+  * :speed - float, [-1.0,1.0] 1.0 is full speed ahead (default), 0 is stopped
+  * :time - float, how long the bot should move"
   [c & {:keys [obstacles heading speed time]
         :or {obstacles 1
              heading 0
@@ -35,10 +43,12 @@
   distance - float, how far the bot should walk
 
   Optional parameters
-  :obstacles - 1 - hop over low obstacles
-               0 - report blocked for any obstacles (default)
-  :heading - float, 0 is straight ahead (default), 90 is strafe left
-  :speed - float, [-1.0,1.0] 1.0 is full speed ahead (default), 0 is stopped"
+
+  * :obstacles
+      * 1 - hop over low obstacles
+      * 0 - report blocked for any obstacles (default)
+  * :heading - float, 0 is straight ahead (default), 90 is strafe left
+  * :speed - float, [-1.0,1.0] 1.0 is full speed ahead (default), 0 is stopped"
   [c distance & {:keys [obstacles heading speed]
                  :or {obstacles 0
                       heading 0
@@ -49,13 +59,15 @@
 (defn move-to
   "Move the bot to a specific x,y coordinate
 
-  x - float, x coordinate to move to
-  y - float, y coordinate to move to
+  * x - float, x coordinate to move to
+  * y - float, y coordinate to move to
 
   Optional parameters
-  :obstacles - 1 - hop over low obstacles
-               0 - report blocked for any obstacles (default)
-  :speed - float, [-1.0,1.0] 1.0 is full speed ahead (default), 0 is stopped "
+
+  * :obstacles
+      * 1 - hop over low obstacles
+      * 0 - report blocked for any obstacles (default)
+  * :speed - float, [-1.0,1.0] 1.0 is full speed ahead (default), 0 is stopped "
   [c x y & {:keys [obstacles speed]
             :or {obstacles 1
                  speed 1}}]
@@ -69,10 +81,12 @@
   time - float, time (in seconds) that the bot should move
 
   Optional parameters
-  :heading - float, direction from facing to move
-  :obstacles - 1 - hop over low obstacles
-               0 - report blocked for any obstacles (default)
-  :speed - float, [-1.0,1.0] 1.0 is full speed ahead (default), 0 is stopped"
+
+  * :heading - float, direction from facing to move
+  * :obstacles
+      * 1 - hop over low obstacles
+      * 0 - report blocked for any obstacles (default)
+  * :speed - float, [-1.0,1.0] 1.0 is full speed ahead (default), 0 is stopped"
   [c time & {:keys [heading obstacles speed]
              :or {heading 0
                   obstacles 1
@@ -86,8 +100,9 @@
   yaw - float, number of degrees to turn to the left (negative to turn right)
 
   Optional parameters
-  :pitch - float, number of degrees to look down from the current view
-           (may be negative to look up)"
+
+  * :pitch - float, number of degrees to look down from the current view
+             (may be negative to look up)"
   [c yaw & {:keys [pitch]
             :or {pitch 0}}]
   (let [id (command-id)]
@@ -100,7 +115,8 @@
   (let [id (command-id)]
     (>!! c (str "n pu " id))))
 
-;;; Basic queries
+;;; ##Basic queries
+
 (defn location? "Queries the current location of the bot" [c]
   (let [id (command-id)]
     (>!! c (str "n lc " id))))
@@ -130,20 +146,21 @@
   "Query for the nearest object at a certain angle from the bot
 
   Optional parameters
-  :type - integer, specifies the type of beam used (defaults to type 5)
-          0 - infinitely narrow beam, stopped by permanent surfaces that would
+
+  * :type - integer, specifies the type of beam used (defaults to type 5)
+      * 0 - infinitely narrow beam, stopped by permanent surfaces that would
               stop the player (walls, floors, ceilings, moving platforms)
-          1 - infinitely narrow beam, stopped by anything that would stop
+      * 1 - infinitely narrow beam, stopped by anything that would stop
               player movement (like type 0, plus other things like quagents)
-          2 - infinitely narrow beam, stopped by anything that would block a shot
-          3 - infinitely narrow beam, blocked by anything in the environment
-          4 - a beam the width of a quagent, otherwise identical to type 0
-          5 - a beam the width of a quagent, otherwise identical to type 1
-          6 - a beam the width of a quagent, otherwise identical to type 2
-          7 - a beam the width of a quagent, otherwise identical to type 3
-  :distance - integer, maximum range of the beam. (default is 8000)
-  :theta - float, degrees left of facing to shoot the beam (default is 0)
-  :phi - float, degrees down from facing to shoot the beam (default is 0)"
+      * 2 - infinitely narrow beam, stopped by anything that would block a shot
+      * 3 - infinitely narrow beam, blocked by anything in the environment
+      * 4 - a beam the width of a quagent, otherwise identical to type 0
+      * 5 - a beam the width of a quagent, otherwise identical to type 1
+      * 6 - a beam the width of a quagent, otherwise identical to type 2
+      * 7 - a beam the width of a quagent, otherwise identical to type 3
+  * :distance - integer, maximum range of the beam. (default is 8000)
+  * :theta - float, degrees left of facing to shoot the beam (default is 0)
+  * :phi - float, degrees down from facing to shoot the beam (default is 0)"
   [c & {:keys [type distance theta phi]
         :or {type 5
              distance 8000
@@ -159,7 +176,8 @@
   (let [id (command-id)]
     (>!! c (str "n ci " id))))
 
-;;; Manage the command queue
+;;; ##Manage the command queue
+
 (defn pop-command
   "Deletes the next command to be executed from the command queue"
   [c]
@@ -193,12 +211,14 @@
   (let [id (command-id)]
     (>!! c (str "n pk " (join " " [id depth])))))
 
-;;; Higher-level commands
+;;; ##Higher-level commands
+
 (defn spawn-bot
   "Takes a map of initial options, and returns the id of the bot
   that's spawned.
 
   Optional:
+
   :name - name of the bot (string)"
   [in-chan out-chan & {:keys [name] }]
   (if name

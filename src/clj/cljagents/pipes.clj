@@ -1,4 +1,7 @@
 (ns cljagents.pipes
+  "Low-level framework for communicating with the quagents engine.
+
+  `connect` and `disconnect` are the main entry points for this namespace."
   (:require [clojure.core.async
              :refer [<! >! <!! >!! go go-loop chan close! sliding-buffer]]
             [clojure.java.io :as io]

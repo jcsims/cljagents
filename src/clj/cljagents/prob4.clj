@@ -1,4 +1,5 @@
 (ns cljagents.prob4
+  "A simple game utilizing `core.logic`."
   (:require [clojure.core.logic :as logic]))
 
 (defn assignment

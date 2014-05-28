@@ -1,4 +1,6 @@
 (ns cljagents.prob1
+  "Make a single circuit of the room. This is designed around the 
+  `medroom` map."
   (:use [cljagents.agent]
         [clojure.core.async :only [<!! >!!]]))
 
@@ -61,10 +63,11 @@
   "Move to to a wall, then make a circuit of the room, stopping
   where the bot first hit the wall"
   [in-chan out-chan]
+  (Thread/sleep 1000) ; For some reason the bot turns after spawning
   ;; First move to the opposite wall, and get the target location
   (spawn-bot in-chan out-chan)
   ;; the bot initially spawns in the corner
-  (move-by in-chan 200 :heading -90)
+  (move-by in-chan 500 :heading 90)
   (<!! out-chan)
   (move in-chan)
   (<!! out-chan)

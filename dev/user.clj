@@ -31,6 +31,14 @@
 
   (stop)
 
+  (prob1/assignment (:in @system) (:out @system))
+
+  (prob2/assignment (:in @system) (:out @system))
+
+  (prob3/assignment (:in @system) (:out @system))
+
+  (prob4/assignment [6 1 7 9 8 16 15])
+
   (prob5/assignment [96 -96] (:in @system) (:out @system))
 
   (ag/move-by (:in @system) 200 :heading 180)

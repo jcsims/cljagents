@@ -1,4 +1,6 @@
 (ns cljagents.prob2
+  "Make a circuit around the room, making sure to keep against wall
+  even around obstacles. This is desogned for the `maze1` map."
   (:use [cljagents.agent]
         [clojure.core.async :only [<!! >!!]]))
 

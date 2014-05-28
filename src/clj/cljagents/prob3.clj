@@ -1,4 +1,7 @@
 (ns cljagents.prob3
+  "Utilize the A* algorithm to determine the shortest path to the goal.
+  Designed for the `maze1` map. For different maps, another function 
+  equivalent to `maze1` needs to be implemented."
   (:use [clojure.data.priority-map :only [priority-map]]
         [cljagents.agent]
         [clojure.core.async :only [<!!]]))

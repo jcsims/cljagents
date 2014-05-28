@@ -1,4 +1,5 @@
 (ns cljagents.prob5
+  "Utilize `core.logic` to implement a simple wandering walk for the bot."
   (:refer-clojure :exclude [==])
   (:require [clojure.core.logic.arithmetic :as ar])
   (:use [cljagents.agent]
